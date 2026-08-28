@@ -71,7 +71,7 @@ class Program
                 case 1:
                     int selectMenu = ConsoleInput.ReadIntInRange("구매할 상품 번호를 입력해주세요 : ", 1, ALL_MENUS);
                     // 음식 고르고 
-                    int selectAmount = ConsoleInput.ReadIntInRange("선택한 상품의 수량을 입력해주세요 : ", 1, MAX_AMOUNT);
+                    int selectAmount = ConsoleInput.ReadIntInRange("선택한 상품의 수량을 입력해주세요 : ", 0, MAX_AMOUNT);
                     // 
                     /*CartItem cartItem = new CartItem(addMenuCount);*/
                     break;
@@ -114,7 +114,7 @@ class Program
     public static void PrintMenuList(MenuList<IBuyable> menuList)
     {
 
-        for (int i = 1; i <= MAX_AMOUNT; i++)
+        for (int i = 0; i < 6; i++)
         {
             IBuyable addPrice = menuList.Get(i);
             string menuTypeStr = "";
@@ -128,7 +128,7 @@ class Program
                 menuTypeStr = "음료";
             }
             
-            Console.WriteLine($"{i}.{addPrice.Name} ({menuTypeStr}) {addPrice.Price}원");
+            Console.WriteLine($"{i+1}.{addPrice.Name} ({menuTypeStr}) {addPrice.Price}원");
         }
     }
 }

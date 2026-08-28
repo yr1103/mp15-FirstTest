@@ -12,16 +12,11 @@ public class MealMenu : Menu, IBuyable
     }
 }
 
-public class ColdNoodle : MealMenu
-{
-    public ColdNoodle(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.NangMyeon, canDiscount)
-    {
-    }
-}
 
-public class PorkCutlet : MealMenu
+
+public class SaleMenu : MealMenu
 {
-    public PorkCutlet(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.PorkCutlet, canDiscount)
+    public SaleMenu(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.Meal, canDiscount)
     {
     }
 

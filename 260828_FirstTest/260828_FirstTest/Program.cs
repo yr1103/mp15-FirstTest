@@ -16,11 +16,13 @@ class Program
     
     static void Main(string[] args)
     {
-        ColdNoodle coldNoodleSoup = new ColdNoodle("물냉면", 9000, MenuType.NangMyeon, false);
-        ColdNoodle spicyColdNoodle = new ColdNoodle("비빔냉면", 10000, MenuType.NangMyeon, false);
-        PorkCutlet bigPorkCutlet = new PorkCutlet("왕돈까스", 12000, MenuType.PorkCutlet, true);
-        PorkCutlet cheesPorkCutlet = new PorkCutlet("치즈 돈까스", 13000, MenuType.PorkCutlet, false);
+        MealMenu coldNoodleSoup = new MealMenu("물냉면", 9000, MenuType.Meal, false);
+        MealMenu spicyColdNoodle = new MealMenu("비빔냉면", 10000, MenuType.Meal, false);
+        SaleMenu bigPorkCutlet = new SaleMenu("왕돈까스", 12000, MenuType.Meal, true);
+        MealMenu cheesPorkCutlet = new MealMenu("치즈 돈까스", 13000, MenuType.Meal, false);
         // 입력 받은 값으로부터 장바구니 List<T>에서 누른 번호로 add해준다.
+
+
 
         MenuList<IBuyable> menuList = new MenuList<IBuyable>(MAX_AMOUNT);
         menuList.Add(coldNoodleSoup);
@@ -28,13 +30,14 @@ class Program
         menuList.Add(bigPorkCutlet);
         menuList.Add(cheesPorkCutlet);
         
+        
 
         while (true)  
         {  
             Console.Clear();
             // 화면을 그린다
             PrintLine();
-            Console.WriteLine($"=== {STORE_NAME} 주문 키오스크 ===\n");
+            Console.WriteLine($"=== {STORE_NAME} 주문 키오스크 ===");
             PrintLine();
             Console.WriteLine("[메뉴판]");
             PrintMenuList(menuList);
@@ -46,6 +49,7 @@ class Program
             // 골라진 번호대로 처리하고 결과를 출력한다
             switch (picked)
             {
+                
                 case 1:
                     int addMenu = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
                     break;
@@ -77,14 +81,20 @@ class Program
 
 
     }
-
-    public static void PrintMenu(IBuyable purchase)
+    
+    public static string getMenuType(int type)
     {
-        for (int i = 0; i < 5; i++)
+        switch (type)
         {
-            Console.WriteLine($"");
+            case (int)MenuType.Meal:    // 0
+                return "식사";
+            case (int)MenuType.Drink:  // 1
+                return "음료";
+            default:
+                return "!오류! 지정되지 않은 타입입니다.";
         }
     }
+    
 
     public static void PrintLine()
     {
@@ -152,24 +162,13 @@ public class MenuList<T> where T : IBuyable
 }
 
 
-public class Drink : Menu
-{
-    public Drink(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.Drink, canDiscount)
-    {
-        
-    }
 
-    public override void Buy(int addPrice, int amount)
-    {
-    }
-}
 
 // 분류 : 냉면, 돈까스, 음료
 public enum MenuType
 { 
-    NangMyeon,
-    PorkCutlet,
-    Drink
+    Meal,
+    Drink,
 }
 
 

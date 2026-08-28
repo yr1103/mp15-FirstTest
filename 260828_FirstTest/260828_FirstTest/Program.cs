@@ -99,12 +99,6 @@ public interface IEdible
     MenuType Type { get; }
 }
 
-// 구매가능한 애들 전부
-public interface IBuyable
-{
-    void Buy(int addPrice, int amount);
-}
-
 
 // 식사 메뉴
 // 정가 계산

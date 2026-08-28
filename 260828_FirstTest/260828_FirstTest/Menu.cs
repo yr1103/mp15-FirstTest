@@ -37,5 +37,8 @@ public abstract class Menu : IBuyable
             return type;
         }
     }
-    public abstract void Buy(int addPrice, int  amount);
+
+    public abstract int Buy(int addPrice, int amount);
+
+
 }

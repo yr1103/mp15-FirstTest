@@ -7,5 +7,5 @@ public interface IBuyable
     string Name { get; }
     int Price { get; }
     MenuType Type { get; }
-    void Buy( int addPrice, int amount);
+    int Buy(int addPrice, int amount);
 }

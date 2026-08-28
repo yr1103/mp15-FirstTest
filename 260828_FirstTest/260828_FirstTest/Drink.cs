@@ -6,7 +6,8 @@ public class Drink : Menu
     {
     }
 
-    public override void Buy(int addPrice, int amount)
+    public override int Buy(int addPrice, int amount)
     {
+        return price * amount;
     }
 }

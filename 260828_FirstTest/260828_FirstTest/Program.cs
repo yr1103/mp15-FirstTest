@@ -38,15 +38,15 @@ class Program
         SaleMenu spicyColdNoodle = new SaleMenu("비빔냉면", 10000, MenuType.Meal);   // 할인 상품 
         SaleMenu bigPorkCutlet = new SaleMenu("왕돈까스", 12000, MenuType.Meal);      // 할인 상품
         MealMenu cheesPorkCutlet = new MealMenu("치즈 돈까스", 13000, MenuType.Meal);
-        Drink Coke = new Drink("콜라", 2000, MenuType.Drink);
-        Drink Sprite = new Drink("사이다", 2500, MenuType.Drink);
+        Drink zeroCoke = new Drink("제로 콜라", 2500, MenuType.Drink);
+        Drink Sprite = new Drink("사이다", 2000, MenuType.Drink);
         
         MenuList<IBuyable> menuList = new MenuList<IBuyable>(ALL_MENUS);
         menuList.Add(coldNoodleSoup);
         menuList.Add(spicyColdNoodle);
         menuList.Add(bigPorkCutlet);
         menuList.Add(cheesPorkCutlet);
-        menuList.Add(Coke);
+        menuList.Add(zeroCoke);
         menuList.Add(Sprite);
         
         CartItem<IBuyable> cartItems = new CartItem<IBuyable>(MAX_AMOUNT);

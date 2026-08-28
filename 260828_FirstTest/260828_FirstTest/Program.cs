@@ -14,6 +14,7 @@ class Program
     
     static void Main(string[] args)
     {
+        
         // 입력 받은 값으로부터 장바구니 List<T>에서 누른 번호로 add해준다.
         
         List<IBuyable> purchase = new List<IBuyable>();
@@ -27,16 +28,33 @@ class Program
             Console.WriteLine($"=== {STORE_NAME} 주문 키오스크 ===\n");
             PrintLine();
 
-            int picked = ConsoleInput.ReadIntInRange("번호 : ", 1, 4);
+            PrintLine();
+            Console.WriteLine("1. 담기   2. 전체 비우기   3. 결제   4. 영업 종료");
+            int picked = ConsoleInput.ReadIntInRange("번호 : ", 1, 10);
 
             // 골라진 번호대로 처리하고 결과를 출력한다
+            switch (picked)
+            {
+                case 1:
+                    int addMenu = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
+                    break;
+                    // 메뉴판과 장바구니를 출력하는 반복문에서 메뉴 형식을 구분하지 않습니다.
+                    // 기반 형식 하나로 받아 반복문 한 번으로 처리합니다. 형식을 알아내려는 조건문이나 클래스 이름이 그 안에 들어가면 안 됩니다. 금액이나 수량을 비교하는 조건문은 상관없음
+                
+
+                case 2:
+                    Console.WriteLine("장바구니를 초기화했습니다.");
+                    break;
+                case 3 :
+                    int add = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
+                    break;
+                //여기서 막힘
+
+            }
 
             ConsoleInput.Pause();  
         }
         
-        // 1부터 6 사이의 번호를 받습니다. 숫자가 아니거나 범위를 벗어나면 다시 묻습니다.  
-        int menuNumber = ConsoleInput.ReadIntInRange("메뉴 번호 : ", 1, 6);
-
         // 0 이상의 값을 받습니다. 위쪽 한계를 정하기 어려울 때 씁니다.  
         int paid = ConsoleInput.ReadIntAtLeast("받은 금액 : ", 0);
 
@@ -84,54 +102,74 @@ public interface IEdible
 // 구매가능한 애들 전부
 public interface IBuyable
 {
-    void Buy();
+    void Buy(int addPrice, int amount);
 }
 
 
-public abstract class Menu
+// 식사 메뉴
+// 정가 계산
+// 메뉴에 메뉴이름, 분류, 가격, 추가 계산 방식 여부
+
+public class MealMenu : Menu, IBuyable
 {
-    protected string name;
-    protected int price;
-    protected MenuType type;
-    
-    public Menu(string menuName, int menuPrice, int menuType)
+    public MealMenu(string name, int price, MenuType type, bool canDiscount) : base(name, price, type, canDiscount)
     {
-        name = menuName;
-        price = menuPrice;
-        type = (MenuType)menuType;
     }
-
-    public string Name
+    public override void Buy(int addPrice, int amount)
     {
-        get
-        {
-            return name;
-        }
+        addPrice = price * amount;
     }
-
-    public int Price
-    {
-        get
-        {
-            return price;
-        }
-    }
-
-    public MenuType Type
-    {
-        get
-        {
-            return type;
-        }
-    }
-
 }
 
+public class ColdNoodle : MealMenu
+{
+    public ColdNoodle(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.NangMyeon, canDiscount)
+    {
+    }
+}
+
+public class PorkCutlet : MealMenu
+{
+    public PorkCutlet(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.PorkCutlet, canDiscount)
+    {
+    }
+
+    public override void Buy(int addPrice, int amount)
+    {
+        float TotalPrice = amount * price;
+        
+        // 돈까스 3개 이상이면 10퍼 할인
+        if (amount >= 3)
+        {
+            TotalPrice *= 0.9f;
+            addPrice = (int)TotalPrice;
+        }
+        else
+        {
+            addPrice = (int)TotalPrice;
+        }
+    }
+}
+
+public class Drink : Menu
+{
+    public Drink(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.Drink, canDiscount)
+    {
+        
+    }
+
+    public override void Buy(int addPrice, int amount)
+    {
+        
+    }
+}
 
 // 분류 : 냉면, 돈까스, 음료
 public enum MenuType
 { 
-    ColdNoodle,
+    NangMyeon,
     PorkCutlet,
     Drink
 }
+
+

@@ -1,6 +1,7 @@
 ﻿// https://github.com/yr1103/mp15-FirstTest
 
 using System;
+using System.Data.SqlTypes;
 using _260828_FirstTest;
 
 class Program
@@ -11,13 +12,21 @@ class Program
     const string COLD_NOODLE = "냉면";
     const string PORK_CUTLET = "돈까스";
     const string DRINK = "음료";
+    const int MAX_AMOUNT = 10;
     
     static void Main(string[] args)
     {
-        
+        ColdNoodle coldNoodleSoup = new ColdNoodle("물냉면", 9000, MenuType.NangMyeon, false);
+        ColdNoodle spicyColdNoodle = new ColdNoodle("비빔냉면", 10000, MenuType.NangMyeon, false);
+        PorkCutlet bigPorkCutlet = new PorkCutlet("왕돈까스", 12000, MenuType.PorkCutlet, true);
+        PorkCutlet cheesPorkCutlet = new PorkCutlet("치즈 돈까스", 13000, MenuType.PorkCutlet, false);
         // 입력 받은 값으로부터 장바구니 List<T>에서 누른 번호로 add해준다.
-        
-        List<IBuyable> purchase = new List<IBuyable>();
+
+        MenuList<IBuyable> menuList = new MenuList<IBuyable>(MAX_AMOUNT);
+        menuList.Add(coldNoodleSoup);
+        menuList.Add(spicyColdNoodle);
+        menuList.Add(bigPorkCutlet);
+        menuList.Add(cheesPorkCutlet);
         
 
         while (true)  
@@ -27,6 +36,8 @@ class Program
             PrintLine();
             Console.WriteLine($"=== {STORE_NAME} 주문 키오스크 ===\n");
             PrintLine();
+            Console.WriteLine("[메뉴판]");
+            PrintMenuList(menuList);
 
             PrintLine();
             Console.WriteLine("1. 담기   2. 전체 비우기   3. 결제   4. 영업 종료");
@@ -79,30 +90,66 @@ class Program
     {
         Console.WriteLine("----------------------------------------");
     }
+
+    public static void PrintMenuList(MenuList<IBuyable> menuList)
+    {
+        for (int i = 1; i <= MAX_AMOUNT; i++)
+        {
+            IBuyable addPrice = menuList.Get(i);
+            Console.WriteLine($"{i}.{addPrice.Name} () {addPrice.Price}");
+        }
+    }
 }
 
 // 항목 물냉, 비냉, 왕돈까스, 치즈돈까스, 카레돈까스, 제로콜라, 스프라이트
 // 분류 냉면(coldNoodle), 돈까스(porkcutlet), 음료(drink)
 
-
-
 // 식사메뉴 구분
 // 나중에 규칙 구현시 사용
-// 전체가격 만원 나눈 몫만큼 천원 쿠폰 지급
+// 전체가격에서 만원 나눈 몫개수만큼 천원 쿠폰 지급
 // 식사 메뉴 최소 한개 주문해야함 (나의 규칙)
-// 음료만 시키면 결제 안되게
+// 음료만 시키면 결제 불가하게(나의 규칙)
 // 돈까스 3개 이상 시키면 10% 할인
-public interface IEdible
-{
-    string Name { get;}
-    int Price { get; }
-    MenuType Type { get; }
-}
-
 
 // 식사 메뉴
 // 정가 계산
 // 메뉴에 메뉴이름, 분류, 가격, 추가 계산 방식 여부
+
+public class MenuList<T> where T : IBuyable
+{
+    private T[] menus;
+    private int count = 0;
+
+    public MenuList(int capacity)
+    {
+        menus = new T[capacity];
+    }
+
+    public int Count
+    {
+        get
+        {
+            return count;
+        }
+    }
+
+    public void Add(T item)
+    {
+        if (count >= menus.Length)
+        {
+            Console.WriteLine("더 구매할 수 없습니다.");
+            return;
+        }
+        
+        menus[count] = item;
+        count++;
+    }
+
+    public T Get(int index)
+    {
+        return menus[index];
+    }
+}
 
 
 public class Drink : Menu
@@ -114,7 +161,6 @@ public class Drink : Menu
 
     public override void Buy(int addPrice, int amount)
     {
-        
     }
 }
 

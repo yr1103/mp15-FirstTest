@@ -4,5 +4,8 @@
 
 public interface IBuyable
 {
-    void Buy(int addPrice, int amount);
+    string Name { get; }
+    int Price { get; }
+    MenuType Type { get; }
+    void Buy( int addPrice, int amount);
 }

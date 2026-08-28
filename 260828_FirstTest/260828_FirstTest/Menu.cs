@@ -14,7 +14,6 @@ public abstract class Menu
         price = menuPrice;
         type = menuType;
         isdiscount = canDiscount;
-        
     }
 
     public string Name

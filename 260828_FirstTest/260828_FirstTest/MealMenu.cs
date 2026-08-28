@@ -1,9 +1,9 @@
 ﻿namespace _260828_FirstTest;
 
 
-public class MealMenu : Menu, IBuyable
+public class MealMenu : Menu
 {
-    public MealMenu(string name, int price, MenuType type, bool canDiscount) : base(name, price, type, canDiscount)
+    public MealMenu(string name, int price, MenuType type) : base(name, price, type)
     {
     }
     public override void Buy(int addPrice, int amount)
@@ -16,7 +16,7 @@ public class MealMenu : Menu, IBuyable
 
 public class SaleMenu : MealMenu
 {
-    public SaleMenu(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.Meal, canDiscount)
+    public SaleMenu(string name, int price, MenuType type) : base(name, price, MenuType.Meal)
     {
     }
 

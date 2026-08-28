@@ -2,7 +2,7 @@
 
 public class Drink : Menu
 {
-    public Drink(string name, int price, MenuType type, bool canDiscount) : base(name, price, MenuType.Drink, canDiscount)
+    public Drink(string name, int price, MenuType type) : base(name, price, MenuType.Drink)
     {
         
     }

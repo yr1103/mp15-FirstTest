@@ -1,19 +1,17 @@
 ﻿namespace _260828_FirstTest;
 
 
-public abstract class Menu
+public abstract class Menu : IBuyable
 {
     protected string name;
     protected int price;
     protected MenuType type;
-    protected bool canDiscount;
     
-    public Menu(string menuName, int menuPrice, MenuType menuType, bool isdiscount)
+    public Menu(string menuName, int menuPrice, MenuType menuType)
     {
         name = menuName;
         price = menuPrice;
         type = menuType;
-        isdiscount = canDiscount;
     }
 
     public string Name

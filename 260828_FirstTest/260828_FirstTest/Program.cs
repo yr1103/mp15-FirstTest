@@ -9,18 +9,19 @@ class Program
     const string STORE_NAME = "수라 냉면";
     const int AMOUNT_TO_SALE = 3;
     const int SALE_VALUE = 10;
-    const string COLD_NOODLE = "냉면";
-    const string PORK_CUTLET = "돈까스";
+    const string MEAL = "식사";
     const string DRINK = "음료";
     const int MAX_AMOUNT = 10;
     
     static void Main(string[] args)
     {
-        MealMenu coldNoodleSoup = new MealMenu("물냉면", 9000, MenuType.Meal, false);
-        MealMenu spicyColdNoodle = new MealMenu("비빔냉면", 10000, MenuType.Meal, false);
-        SaleMenu bigPorkCutlet = new SaleMenu("왕돈까스", 12000, MenuType.Meal, true);
-        MealMenu cheesPorkCutlet = new MealMenu("치즈 돈까스", 13000, MenuType.Meal, false);
-        // 입력 받은 값으로부터 장바구니 List<T>에서 누른 번호로 add해준다.
+        
+        MealMenu coldNoodleSoup = new MealMenu("물냉면", 9000, MenuType.Meal);
+        MealMenu spicyColdNoodle = new MealMenu("비빔냉면", 10000, MenuType.Meal);   // 할인 상품 
+        SaleMenu bigPorkCutlet = new SaleMenu("왕돈까스", 12000, MenuType.Meal);      // 할인 상품
+        MealMenu cheesPorkCutlet = new MealMenu("치즈 돈까스", 13000, MenuType.Meal);
+        Drink Coke = new Drink("콜라", 2000, MenuType.Drink);
+        Drink Sprite = new Drink("사이다", 2500, MenuType.Drink);
 
 
 
@@ -29,8 +30,10 @@ class Program
         menuList.Add(spicyColdNoodle);
         menuList.Add(bigPorkCutlet);
         menuList.Add(cheesPorkCutlet);
+        menuList.Add(Coke);
+        menuList.Add(Sprite);
         
-        
+        List<CartItem> cartItems = new List<CartItem>();
 
         while (true)  
         {  
@@ -44,17 +47,16 @@ class Program
 
             PrintLine();
             Console.WriteLine("1. 담기   2. 전체 비우기   3. 결제   4. 영업 종료");
-            int picked = ConsoleInput.ReadIntInRange("번호 : ", 1, 10);
+            int picked = ConsoleInput.ReadIntInRange("번호 : ", 1, 4);
 
             // 골라진 번호대로 처리하고 결과를 출력한다
             switch (picked)
             {
                 
                 case 1:
-                    int addMenu = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
+                    int addMenuCount = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
+                    CartItem cartItem = new CartItem(addMenuCount);
                     break;
-                    // 메뉴판과 장바구니를 출력하는 반복문에서 메뉴 형식을 구분하지 않습니다.
-                    // 기반 형식 하나로 받아 반복문 한 번으로 처리합니다. 형식을 알아내려는 조건문이나 클래스 이름이 그 안에 들어가면 안 됩니다. 금액이나 수량을 비교하는 조건문은 상관없음
                 
 
                 case 2:
@@ -81,20 +83,8 @@ class Program
 
 
     }
-    
-    public static string getMenuType(int type)
-    {
-        switch (type)
-        {
-            case (int)MenuType.Meal:    // 0
-                return "식사";
-            case (int)MenuType.Drink:  // 1
-                return "음료";
-            default:
-                return "!오류! 지정되지 않은 타입입니다.";
-        }
-    }
-    
+
+
 
     public static void PrintLine()
     {
@@ -103,10 +93,22 @@ class Program
 
     public static void PrintMenuList(MenuList<IBuyable> menuList)
     {
+
         for (int i = 1; i <= MAX_AMOUNT; i++)
         {
             IBuyable addPrice = menuList.Get(i);
-            Console.WriteLine($"{i}.{addPrice.Name} () {addPrice.Price}");
+            string menuTypeStr = "";
+            
+            if (addPrice.Type == MenuType.Meal)
+            {
+                menuTypeStr = "식사";
+            }
+            else if (addPrice.Type == MenuType.Drink)
+            {
+                menuTypeStr = "음료";
+            }
+            
+            Console.WriteLine($"{i}.{addPrice.Name} ({menuTypeStr}) {addPrice.Price}");
         }
     }
 }
@@ -168,7 +170,7 @@ public class MenuList<T> where T : IBuyable
 public enum MenuType
 { 
     Meal,
-    Drink,
+    Drink
 }
 
 

@@ -81,9 +81,12 @@ class Program
                     break;
                 case 3 :
                     int add = ConsoleInput.ReadIntInRange("금액을 투입(입력)해주세요 : ", 1, MAX_MONEY);
+                    // 총 양보다 금액 많이 넣었으면 차감해서 잔액 표시 및 구매 완료
+                    // 돈이 안되면 처음으로 되돌아가고 다시 처음으로
                     break;
                 case 4 :
                     Console.WriteLine($"총 주문 건 수는 0건이고 총 매출액은 0000 원입니다.");
+                    //종료
                     break;
                 //여기서 막힘
                 

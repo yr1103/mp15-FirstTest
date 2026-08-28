@@ -23,7 +23,7 @@ public class MenuList<T> where T : IBuyable
     {
         if (count >= menus.Length)
         {
-            Console.WriteLine("더 구매할 수 없습니다.");
+            Console.WriteLine("더 추가할 수 없습니다.");
             return;
         }
         

@@ -5,7 +5,7 @@
 // 정가 계산
 // 메뉴에 메뉴이름, 분류, 가격, 추가 계산 방식 여부
 // 항목 물냉, 비냉, 왕돈까스, 치즈돈까스, 제로콜라, 스프라이트
-// 분류 냉면(coldNoodle), 돈까스(porkcutlet), 음료(drink)
+// 분류 식사, 음료
 
 // 비냉 3개 이상 or 치돈 3개 이상 구매시 10%할인
 
@@ -35,7 +35,7 @@ class Program
     static void Main(string[] args)
     {
         MealMenu coldNoodleSoup = new MealMenu("물냉면", 9000, MenuType.Meal);
-        MealMenu spicyColdNoodle = new MealMenu("비빔냉면", 10000, MenuType.Meal);   // 할인 상품 
+        SaleMenu spicyColdNoodle = new SaleMenu("비빔냉면", 10000, MenuType.Meal);   // 할인 상품 
         SaleMenu bigPorkCutlet = new SaleMenu("왕돈까스", 12000, MenuType.Meal);      // 할인 상품
         MealMenu cheesPorkCutlet = new MealMenu("치즈 돈까스", 13000, MenuType.Meal);
         Drink Coke = new Drink("콜라", 2000, MenuType.Drink);
@@ -128,7 +128,7 @@ class Program
                 menuTypeStr = "음료";
             }
             
-            Console.WriteLine($"{i}.{addPrice.Name} ({menuTypeStr}) {addPrice.Price}");
+            Console.WriteLine($"{i}.{addPrice.Name} ({menuTypeStr}) {addPrice.Price}원");
         }
     }
 }

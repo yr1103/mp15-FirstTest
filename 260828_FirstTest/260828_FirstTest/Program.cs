@@ -1,6 +1,7 @@
 ﻿// https://github.com/yr1103/mp15-FirstTest
 
 using System;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using _260828_FirstTest;
 
@@ -12,6 +13,7 @@ class Program
     const string MEAL = "식사";
     const string DRINK = "음료";
     const int MAX_AMOUNT = 10;
+    const int ALL_MENUS = 6;
     
     static void Main(string[] args)
     {
@@ -25,7 +27,7 @@ class Program
 
 
 
-        MenuList<IBuyable> menuList = new MenuList<IBuyable>(MAX_AMOUNT);
+        MenuList<IBuyable> menuList = new MenuList<IBuyable>(ALL_MENUS);
         menuList.Add(coldNoodleSoup);
         menuList.Add(spicyColdNoodle);
         menuList.Add(bigPorkCutlet);
@@ -33,7 +35,7 @@ class Program
         menuList.Add(Coke);
         menuList.Add(Sprite);
         
-        List<CartItem> cartItems = new List<CartItem>();
+        CartItem<IBuyable> cartItems = new CartItem<IBuyable>(MAX_AMOUNT);
 
         while (true)  
         {  
@@ -48,18 +50,17 @@ class Program
             PrintLine();
             Console.WriteLine("1. 담기   2. 전체 비우기   3. 결제   4. 영업 종료");
             int picked = ConsoleInput.ReadIntInRange("번호 : ", 1, 4);
-
+            /*cartItems.Add(picked);*/
             // 골라진 번호대로 처리하고 결과를 출력한다
             switch (picked)
             {
                 
                 case 1:
                     int addMenuCount = ConsoleInput.ReadIntInRange("구매할 수량을 입력해주세요 : ", 1, 10);
-                    CartItem cartItem = new CartItem(addMenuCount);
+                    /*CartItem cartItem = new CartItem(addMenuCount);*/
                     break;
-                
-
                 case 2:
+                    //CartItem의 개수 초기화, 가격 초기화
                     Console.WriteLine("장바구니를 초기화했습니다.");
                     break;
                 case 3 :
@@ -127,41 +128,8 @@ class Program
 // 정가 계산
 // 메뉴에 메뉴이름, 분류, 가격, 추가 계산 방식 여부
 
-public class MenuList<T> where T : IBuyable
-{
-    private T[] menus;
-    private int count = 0;
 
-    public MenuList(int capacity)
-    {
-        menus = new T[capacity];
-    }
 
-    public int Count
-    {
-        get
-        {
-            return count;
-        }
-    }
-
-    public void Add(T item)
-    {
-        if (count >= menus.Length)
-        {
-            Console.WriteLine("더 구매할 수 없습니다.");
-            return;
-        }
-        
-        menus[count] = item;
-        count++;
-    }
-
-    public T Get(int index)
-    {
-        return menus[index];
-    }
-}
 
 
 
